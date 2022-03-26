@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生成绩查询系统</title>
+    <script type="text/javascript">
+        function login(){
+            var username=window.document.getElementById("username").value;
+            var password=window.document.getElementById("password").value;
+            if(username=="2102985411" && password=="123")
+                {
+                alert("登录成功！");
+                window.location = "https://blog.csdn.net/qq_38962479/article/details/107717380";
+                }
+            else{
+                alert("登录失败！");
+                window.location.href= ".html";
+                return false; 
+                }
+        }
+        </script>
+      </head>
+</head>
+<body>
+    <form action="">
+        用户名：<input type="username" placeholder="请输入用户名"  id="username"/><br>
+        密码：<input type="password" placeholder="请输入密码" id="password"/><br>
+        <input type="button" onclick="login()" value="登录"/>
+    </form>
+</body>
+</html>
