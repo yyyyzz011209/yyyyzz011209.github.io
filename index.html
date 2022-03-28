@@ -14,19 +14,31 @@
                 }
             else{
                 alert("登录失败！");
-                window.location.href= ".html";
+                window.location.href= "";
                 return false; 
                 }
         }
         </script>
       </head>
 </head>
-<body>
-    <form action="">
-        用户名：<input type="username" placeholder="请输入用户名"  id="username"/><br>
-        密码：<input type="password" placeholder="请输入密码" id="password"/><br>
-        <input type="button" onclick="login()" value="登录"/>
-    </form>
-    <img src="https://alifei05.cfp.cn/creative/vcg/veer/1600water/veer-302182224.jpg" alt="">
+<body   background="https://alifei05.cfp.cn/creative/vcg/veer/1600water/veer-302182224.jpg" style="background-size: 100%;">
+    <style>
+        h1
+        {
+            text-align: center;
+        }
+        h3
+        {
+            text-align: center;
+        }
+    </style>
+    <h1>Welcome</h1>
+    <h3>
+        <form action="">
+            账号：<input type="username" placeholder="请输入用户名"  id="username"/><br>
+            密码：<input type="password" placeholder="请输入密码" id="password"/><br><br>
+            <input type="button" onclick="login()" value="点击登录"/>
+        </form>
+    </h3>
 </body>
 </html>
