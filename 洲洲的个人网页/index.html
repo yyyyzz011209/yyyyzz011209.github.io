@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>洲洲的个人网页</title>
+    <script type="text/javascript">
+        function login(){
+            var username=window.document.getElementById("username").value;
+            var password=window.document.getElementById("password").value;
+            if(username=="2102985411" && password=="123")
+                {
+                alert("登录成功！");
+                window.location = "https://yyyyzz011209.github.io/";
+                }
+            else{
+                alert("登录失败！");
+                window.location.href= "";
+                return false; 
+                }
+        }
+        </script>
+      </head>
+</head>
+<body   background="https://alifei05.cfp.cn/creative/vcg/veer/1600water/veer-302182224.jpg" style="background-size: 100%;">
+    <style>
+        h1
+        {
+            text-align: center;
+        }
+        h3
+        {
+            text-align: center;
+        }
+    </style>
+    <h1>Welcome</h1>
+    <h3>
+        <form action="">
+            账号：<input type="username" placeholder="请输入用户名"  id="username"/><br>
+            密码：<input type="password" placeholder="请输入密码" id="password"/><br><br>
+            <input type="button" onclick="login()" value="点击登录"/>
+        </form>
+    </h3>
+</body>
+</html>
