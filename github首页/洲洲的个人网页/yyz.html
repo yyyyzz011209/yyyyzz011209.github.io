@@ -2,74 +2,108 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>个人网页</title>
 </head>
 <body>
     <style>
-    body
-    {
-        width: 1500px;
-    }
-    h1
-    {
-        text-align: center;
-    }
-    h2
-    {
-        text-align: right;
-    }
+        body
+        {
+            text-align: center;
+            background-color: rgba(250,250,0,0.1);
+        }
+        div
+        {
+            text-align: center;
+        }
+        h1,h2
+        {
+            text-align: center;  
+            font-size: 45px;
+        }
+        #prev,#next
+        {
+            width: 100px;
+            height: 50px;
+            border-radius: 50px;
+        }
+        h3
+        {
+            font-size: 30px;
+            color: rgba(250,5,250,0.5);
+        }
+        a:link
+        {
+           color:blue;
+        }
+        a:visited
+        {
+           color:rgb(233, 0, 250);
+        }
+        a:hover
+        {
+           font-size: 20px;
+           color: blue;
+        }
+        a:active
+        {
+           color:black;
+           
+        }
+      
     </style>
-    <h1>CS03-16</h1>
-    <h2>Web Programming Homeworks</h2>
-    <table border="1" width="700px" height="100px" align="center"    cellspacing="0" cellpadding="20">
-        <tr align="center">
-            <td>班级</td>
-            <td>学号</td>
-            <td>姓名</td>
-            <td> 第 <input type="text" name="" oninput="value=value.replace(/[^\d]/g,'' )"  style="width: 30px;" > 次作业</td>
-        </tr>
-        <tr align="center">
-            <td>21计科三班</td>
-            <td>20213663</td>
-            <td>俞森洲</td>
-            <td><a href="./20213663-01.html">20213663-1</a></td>
-        </tr >
-        <tr align="center">
-            <td>21计科三班</td>
-            <td>20213664</td>
-            <td>夏豪</td>
-            <td><a href="./20213664-01.html">20213664-1</a></td>
-        </tr>
-        <tr align="center">
-            <td>21计科三班</td>
-            <td>20213662</td>
-            <td>崔力文</td>
-            <td><a href="./20213662-01.html">20213662-1</a></td>
-        </tr>
-        <tr align="center">
-            <td>21计科三班</td>
-            <td>20213666</td>
-            <td>黄建忠</td>
-            <td><a href="./20213666-01.html">20213666-1</a></td>
-        </tr>
-        <tr align="center">
-            <td>21计科三班</td>
-            <td>20213667</td>
-            <td>李添鹏</td>
-            <td><a href="./20213667-01.html">20213667-1</a></td>
-        </tr>
-        <tr align="center">
-            <td>21计科三班</td>
-            <td>20213668</td>
-            <td>张君</td>
-            <td><a href="./20213668-01.html">20213668-1</a></td>
-        </tr>
-        <tr align="center">
-            <td>21计科三班</td>
-            <td>20213669</td>
-            <td>熊金菁</td>
-            <td><a href="./20213669-01.html">20213669-1</a></td>
-        </tr>
-    </table>
+    <h1>Welcome To</h1>
+    <h2>俞森洲的个人网页</h2>
+       <input type="button" value="上一页" id="prev">
+       <input type="button" value="下一页" id="next">
+    <div>
+        <table border="1" width="600" height="300" cellspacing="0" cellpadding="0"  align="center">
+            <tr align="center">
+                <td>作业次序</td>
+                <td>作业链接</td>
+                <td>简单介绍</td>
+            </tr>
+            <tr align="center">
+                <td>第一周作业</td>
+                <td><a href="20213663-01/20213663-01.html">20213663-01</a></td>
+                <td>古诗《春宵》</td>
+            </tr>
+            <tr align="center">
+                <td>第二周作业</td>
+                <td><a href="20213663-02/20213663-02.html">20213663-02</a></td>
+                <td>《超链接》</td>
+            </tr>
+            <tr align="center">
+                <td>第三周作业</td>
+                <td><a href="20213663-03/20213663-03.html">20213663-03</a></td>
+                <td>《新闻页面》</td>
+            </tr>
+            <tr align="center">
+                <td>第四周作业</td>
+                <td><a href="20213663-04/20213663-4.html">20213363-04</a></td>
+                <td>《健康码查询》</td>
+            </tr>
+            <tr align="center">
+                <td>第五周作业</td>
+                <td><a href="20213663-05/20213663-05.html">20213363-05</a></td>
+                <td>古诗《饮湖上初晴后雨》</td>
+            </tr>
+            <tr align="center">
+                <td>第六周作业</td>
+                <td><a href="20213663-06/20213663-06.html">20213663-06</a></td>
+                <td>《实现翻页》</td>
+            </tr>
+            <tr align="center">
+                <td>第七周作业</td>
+                <td><a href="">20213663-07</a></td>
+                <td></td>
+            </tr>
+            <tr align="center">
+                <td>第八周作业</td>
+                <td><a href="">20213663-08</a></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <h3>CopyRight Belongs to Mr. Yu Sen Zhou</h3>
 </body>
 </html>
