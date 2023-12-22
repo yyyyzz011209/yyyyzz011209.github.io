@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>俞森洲的自学系统原型</title>
+    <style type= "text/css">
+    *{
+        text-align: center;
+    }
+    body{
+        margin: 0;
+        background-color: blanchedalmond;
+    }
+    div#duration input{
+        display: block;
+        font-size: 2vw;
+    }
+    div#duration{
+        position: absolute;
+        left: 3vw;
+        top: 10vw;
+    }
+    #prexious.next.play.pause{
+        background-color: aquamarine;
+        font-size: 1.5vw;
+        color: black;
+        width: 7vw;
+    }
+   div#logo{
+    text-align: center;
+    background-color: aquamarine;
+    color: black;
+    font-size: 4vw;
+    position: absolute;
+    padding-top:2vw ;
+    right: 0%;
+    width: 20vw;
+    height: 8vw;
+   }
+   div#showtime{
+    text-align: center;
+    background-color: aquamarine;
+    color: black;
+    font-size: 4vw;
+    position: absolute;
+    padding-top: 2vw;
+    left: 0%;
+    width: 25vw;
+    height: 8vw;
+   }
+    #jump{
+        width: 4em;
+        cursor: pointer;
+    }
+    #switch{
+        background-color:aquamarine ;
+        font-size: 1.5vw;
+        color: black;
+        width: 9vw;
+        cursor: pointer;
+    }
+    .myImage{
+        width: 10%;
+        height: 30%;
+    }
+    .myImage2{
+        width: 20%;
+        height: 30%;
+    }
+    </style>
+    <script src="player.js">
+    </script>
+</head>
+<body>
+     <!-- 小组成员照片 -->
+    <div id="picture">
+        <img class="myImage2"src="face/xiaozu.jpg"  alt="Xiaozu">
+        <img class="myImage" src="face/myFace1.jpg" alt="guoXY">
+        <img class="myImage" src="face/myFace2.jpg" alt="liaoX">
+        <img class="myImage" src="face/myFace3.jpg" alt="xiaH">
+        <img class="myImage" src="face/myFace4.jpg" alt="XiongJJ">
+        <img class="myImage" src="face/myFace5.jpg" alt="yuSZ">
+    
+    </div>
+    <div id="UI">
+
+        <div id="showtime"></div>
+
+        <div id="logo">
+
+        </div>
+        <div id="stage">
+
+            <audio id="myAudio"></audio>
+            <video id="myVideo" center></video>
+        </div>
+        <div id="aProgress"></div>
+        <div id="button">
+            <div id="vProgress"></div>
+        </div>
+        <button id="previous">previous</button>
+        <button id="play">play</button>
+        <button id="pause">pause</button>
+        <button id="next">next</button>
+        <button id="switch">视频->音频</button>
+    </div>
+    </div>
+    <!-- js代码部分 -->
+    <script>
+        var Model = {
+            i: 0,
+            j: 0,
+            isVideo: true,
+            UI: {
+                buttonDom: document.getElementById('button'),
+                myAudioDom: document.getElementById('myAudio'),
+                myCurrentTimeDom: document.getElementById('currentTime'),
+                vProgressDom: document.getElementById('vProgress'),
+                aProgressDom: document.getElementById('aProgress'),
+                stageDom: document.getElementById('stage'),
+                myVideoDom: document.getElementById('myVideo'),
+                logoDom: document.getElementById('logo'),
+                showtimeDom: document.getElementById('showtime'),
+                //下面是按钮
+                playDom: document.getElementById("play"),
+                pauseDom: document.getElementById("pause"),
+                nextDom: document.getElementById("next"),
+                jumpDom: document.getElementById("jump"),
+                previousDom: document.getElementById("previous"),
+                switchDom: document.getElementById('switch')
+            },
+            play: function () {
+                Model.isVideo ? Model.UI.myVideoDom.play() : Model.UI.myAudioDom.play();
+
+                Model.timeInfo();
+            },
+            pause: function () {
+                Model.isVideo ? Model.UI.myVideoDom.pause() : Model.UI.myAudioDom.pause();
+            },
+            next: function () {
+                let mediaNum = Model.isVideo ? mediaData.videoFileNames.length : mediaData.podFileStruct.length;
+                Model.isVideo ? Model.i++ : Model.j++;
+                if (Model.i == mediaNum || Model.j == mediaNum) {
+                    Model.i = 0;
+                    Model.j = 0;
+                }
+                if (Model.isVideo) {
+                    Model.UI.logoDom.textContent = (parseInt(Model.i) + 1) + "/" + (mediaNum);
+                    Model.UI.myVideoDom.src = mediaData.videoPath + mediaData.videoFileNames[Model.i];
+                } else {
+                    Model.UI.logoDom.textContent = (parseInt(Model.j) + 1) + "/" + (mediaNum);
+                    Model.UI.myAudioDom.src = mediaData.podPath + mediaData.podFileStruct[Model.j].fileName;
+                    Model.aProgress();
+                }
+            },
+            previous: function () {
+                let mediaNum = Model.isVideo ? mediaData.videoFileNames.length : mediaData.podFileStruct.length;
+                Model.isVideo ? Model.i-- : Model.j--;
+                if (Model.i == -1 || Model.j == -1) {
+                    Model.i = mediaNum - 1;
+                    Model.j = mediaNum - 1;
+                }
+                if (Model.isVideo) {
+                    Model.UI.logoDom.textContent = (parseInt(Model.i) + 1) + "/" + (mediaNum);
+                    Model.UI.myVideoDom.src = mediaData.videoPath + mediaData.videoFileNames[Model.i];
+                } else {
+                    Model.UI.logoDom.textContent = (parseInt(Model.j) + 1) + "/" + (mediaNum);
+                    Model.UI.myAudioDom.src = mediaData.podPath + mediaData.podFileStruct[Model.j].fileName;
+                    Model.aProgress();
+                }
+            },
+            aProgress: function () {
+                //生成音频跳转按钮
+                Model.UI.aProgressDom.items2 = [];
+                Model.UI.aProgressDom.innerHTML = '';
+                for (let i = 0; i < mediaData.podFileStruct[Model.j].title.length; i++) {
+                    var tempDom = document.createElement('input');
+                    tempDom.type = 'button';
+                    tempDom.value = mediaData.podFileStruct[Model.j].title[i];
+                    Model.UI.aProgressDom.items2[Model.j] = tempDom;
+                    Model.UI.aProgressDom.appendChild(tempDom);
+                    Model.UI.aProgressDom.items2[Model.j].onclick = function () {
+                        Model.UI.myAudioDom.currentTime = mediaData.podFileStruct[Model.j].time[i];
+                    }
+                }
+            },
+            vProgress: function () {
+                //动态生成9个按钮
+                Model.UI.vProgressDom.items = [];
+                for (let i = 0; i < 10; i++) {
+                    let tempDom = document.createElement('input');
+                    tempDom.type = 'button';
+                    tempDom.value += 'NO.' + (i + 1);
+                    Model.UI.vProgressDom.items[i] = tempDom;
+                    Model.UI.vProgressDom.appendChild(tempDom);
+                }
+                for (let i = 0; i < 10; i++) {
+                    Model.UI.vProgressDom.items[i].onclick = function () {
+                        Model.UI.myVideoDom.currentTime = i * Model.UI.myVideoDom.duration / 10;
+                    }
+                }
+            },
+            timeInfo: function () {
+                let mediaTime = Model.isVideo ? Model.UI.myVideoDom.duration : Model.UI.myAudioDom.duration;
+                mediaTime = parseInt(mediaTime);
+                let currentTime = Model.isVideo ? Model.UI.myVideoDom.currentTime : Model.UI.myAudioDom.currentTime;
+                currentTime = parseInt(currentTime);
+                Model.UI.showtimeDom.textContent = currentTime + 's' + '/' + mediaTime + 's';
+            },
+            logoInfo: function () {
+                //设置膏药
+                let mediaNum = Model.isVideo ? mediaData.videoFileNames.length : mediaData.podFileStruct.length;
+                let mediaI = Model.isVideo ? Model.i : Model.j;
+                Model.UI.logoDom.textContent = (mediaI) + 1 + "/" + (mediaNum);
+            }
+        };
+        //初始化路径
+        Model.UI.myAudioDom.src = mediaData.podPath + mediaData.podFileStruct[Model.j].fileName;
+        Model.UI.myVideoDom.src = mediaData.videoPath + mediaData.videoFileNames[Model.i];
+
+        //设置全屏ui
+        Model.UI.browserWidth = document.body.clientWidth;
+        Model.UI.myVideoDom.style.width = Model.UI.browserWidth + "px";
+        //设置视频进度条
+        Model.vProgress();
+
+        //设置左上角视频时间
+        window.setInterval(function () {
+            let myMedia;
+            let showtime = Model.UI.showtimeDom;
+            let logoDom = Model.UI.logoDom;
+            let i = Model.i;
+            if (Model.isVideo) {
+                myMedia = Model.UI.myVideoDom;
+            } else {
+                myMedia = Model.UI.myAudioDom;
+            }
+            let showtimeString = parseInt(myMedia.currentTime) + 's';
+            showtimeString += '/' + parseInt(myMedia.duration) + 's';
+            showtime.textContent = showtimeString;
+            Model.logoInfo();
+        }, 100)
+
+        // 异步程序代码
+
+        //播放
+        Model.UI.playDom.onclick = function () {
+            Model.play();
+        };
+
+        //暂停
+        Model.UI.pauseDom.onclick = function () {
+            Model.pause();
+        };
+
+        //下一页
+        Model.UI.nextDom.onclick = function () {
+            Model.next();
+        };
+        Model.UI.previousDom.onclick = function () {
+            Model.previous();
+        };
+
+        //跳转页面
+        // function jumpToVideo() {
+        //     Model.i = Model.UI.jumpDom.value - 1;
+        //     if (parseInt(Model.i) < 0) {
+        //         Model.i = 0;
+        //         myVideo.src = "video/" + mp4Files[Model.i];
+        //         console.log("没有找到该页视频")
+        //     }
+        //     else if (parseInt(Model.i) <= mp4Files.length) {
+        //         myVideo.src = "video/" + mp4Files[Model.i];
+        //         Model.UI.logoDom.textContent = parseInt(Model.i + 1) + "/" + (mp4Files.length - 1);
+        //     }
+        //     else {
+        //         console.log("没有找到该页视频")
+        //         i = 0;
+        //         myVideo.src = "video/" + mp4Files[i];
+        //     }
+        // }
+
+        //让切换视频音频按钮有效
+        Model.UI.switchDom.onclick = function () {
+            if (Model.isVideo) {
+                this.textContent = "视频->音频";
+                Model.UI.myVideoDom.pause();
+                Model.UI.myVideoDom.style.display = "none";
+                Model.UI.myAudioDom.style.display = "block";
+                Model.UI.buttonDom.style.display = "none";
+                Model.aProgress();
+            }
+            else {
+                this.textContent = "音频->视频";
+                Model.UI.myVideoDom.style.display = "block";
+                Model.UI.myAudioDom.style.display = "none";
+                Model.UI.aProgressDom.innerHTML = '';
+                Model.UI.buttonDom.style.display = "block";
+            }
+            Model.isVideo = !Model.isVideo;
+        }
+    </script>
+  </body>
+</html>
